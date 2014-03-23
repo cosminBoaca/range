@@ -42,6 +42,7 @@
 #include <iterator>
 #include <algorithm>
 #include <cstddef>
+#include <stdexcept>
 
 /*! \file
     Defines the \c iterator_class and related functions.
@@ -338,6 +339,15 @@ public:
     {
         BOOST_ASSERT(at >= 0 && at < size());
         return this->m_Begin[at];
+    }
+
+    reference at(difference_type _at) const
+    {
+        if(_at < 0)
+            throw std::out_of_range("Index is negative");
+        if(_at >= size())
+            throw std::out_of_range("Index is out of range");
+        return this->m_Begin[_at];
     }
 
     //
